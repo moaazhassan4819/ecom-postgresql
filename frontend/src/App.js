@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useCallback } from "react";
 import axios from "axios";
 
 import { Routes, Route, Navigate } from "react-router";
@@ -18,7 +18,7 @@ function App() {
   } = useContext(GlobalContext);
 
 
-  const checkUser = async () => {
+  const checkUser = useCallback(async () => {
 
     try {
 
@@ -42,14 +42,14 @@ function App() {
 
       console.log("User not logged in");
     }
-  };
+  }, [dispatch]);
 
 
   useEffect(() => {
 
     checkUser();
 
-  }, []);
+  }, [checkUser]);
 
 
   if (state.isLogin === null) {
