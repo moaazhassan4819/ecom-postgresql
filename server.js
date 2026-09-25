@@ -260,7 +260,9 @@ const __frontend = path.join(__dirname, './frontend/build');
 
 app.use(express.static(__frontend));
 
-app.get(/^(?!\/api\/).*/, (req, res) => {
+// Only serve the React app shell for client-side routes. Missing JS/CSS assets
+// must stay 404s instead of receiving index.html as a JavaScript response.
+app.get(/^(?!\/api\/)(?!.*\.[^/]+$).*/, (req, res) => {
     res.sendFile(path.join(__frontend, 'index.html'));
 });
 
