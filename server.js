@@ -1,11 +1,13 @@
 import express from "express";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { db } from "./db.js";
 import cors from "cors";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
-import path from "path";
 
 const app = express();
 
@@ -255,15 +257,30 @@ app.post("/api/v1/logout", (req, res) => {
 // =========================
 
 
-const __dirname = path.resolve();
-const __frontend = path.join(__dirname, './frontend/build');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const __frontend = path.join(__dirname, "frontend", "build");
 
-app.use(express.static(__frontend));
+if (!fs.existsSync(__frontend)) {
+    console.warn(`Frontend build folder not found at ${__frontend}. Run "npm run build" inside frontend first.`);
+}
 
-// Only serve the React app shell for client-side routes. Missing JS/CSS assets
-// must stay 404s instead of receiving index.html as a JavaScript response.
-app.get(/^(?!\/api\/)(?!.*\.[^/]+$).*/, (req, res) => {
-    res.sendFile(path.join(__frontend, 'index.html'));
+app.use(express.static(__frontend, { index: false }));
+
+// Serve the app shell only for real browser routes, never for missing asset requests.
+app.get(/^\/((?!api\/).)*$/, (req, res, next) => {
+    const hasFileExtension = /\.[^/]+$/.test(req.path);
+
+    if (hasFileExtension) {
+        return res.status(404).send("Not Found");
+    }
+
+    const indexPath = path.join(__frontend, "index.html");
+    if (!fs.existsSync(indexPath)) {
+        return next(new Error("Frontend build not found. Run npm run build in the frontend folder."));
+    }
+
+    return res.sendFile(indexPath);
 });
 
 app.listen(PORT, () => {
