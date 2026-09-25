@@ -1,13 +1,13 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, sans-serif; color: #24302a; background: #f4f6f5; }
+.center-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.card { width: 100%; max-width: 440px; background: #fff; border: 1px solid #e2e7e3; border-radius: 12px; padding: 36px; box-shadow: 0 8px 28px rgba(25, 45, 34, .08); }
+.logo { color: #2d7052; font-size: 18px; font-weight: 700; text-align: center; margin-bottom: 28px; }
+h1 { margin: 0; text-align: center; font-size: 25px; }.subtext { margin: 9px 0 28px; text-align: center; color: #69756f; font-size: 14px; }
+form { display: grid; gap: 16px; } label { display: grid; gap: 7px; font-size: 13px; font-weight: 600; }
+input { width: 100%; padding: 12px; font: inherit; border: 1px solid #d8dfda; border-radius: 7px; outline: none; } input:focus { border-color: #2d7052; box-shadow: 0 0 0 3px #2d70521a; }
+button { border: 0; border-radius: 7px; background: #2d7052; color: white; padding: 13px; font-size: 14px; font-weight: 600; } button:hover { background: #245b43; } button:disabled { opacity: .7; cursor: not-allowed; }
+.switch-text { margin: 22px 0 0; text-align: center; font-size: 13px; color: #69756f; }.switch-text a { color: #2d7052; font-weight: 700; text-decoration: none; }
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }.checkbox { display: flex; align-items: center; gap: 8px; font-weight: 500; }.checkbox input { width: auto; accent-color: #2d7052; }
+.user-details { margin: 25px 0; border-top: 1px solid #edf0ee; }.user-details p { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 13px 0; border-bottom: 1px solid #edf0ee; font-size: 14px; }.user-details span { color: #7a857f; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }.dashboard-card button { width: 100%; }
+@media (max-width: 480px) { .card { padding: 28px 22px; }.input-row { grid-template-columns: 1fr; } }
